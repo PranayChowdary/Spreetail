@@ -10,28 +10,28 @@ namespace MultiValueDictionaryTest
     [TestFixture]
     public class Tests
     {
-        private Program program;
+        private DictionaryExtensionHelper DictionaryExtensionHelper;
 
         [SetUp]
         public void SetUp()
         {
-            program = new Program();
+            DictionaryExtensionHelper = new DictionaryExtensionHelper();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Program.map.Clear();
+            DictionaryExtensionHelper.map.Clear();
         }
 
         [Test]
         public void TestKeys()
         {
             string[] values = new string[] { "foo", "baz" };
-            Program.Add(values);
-            Program.Keys();
-            Assert.IsTrue(Program.map.ContainsKey("foo"));
-            Assert.AreEqual(Program.map.Count, 1);
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Keys();
+            Assert.IsTrue(DictionaryExtensionHelper.map.ContainsKey("foo"));
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 1);
         }
 
         [Test]
@@ -39,10 +39,10 @@ namespace MultiValueDictionaryTest
         {
             string[] values = new string[] { "foo", "baz" };
             List<String> strlist = new List<String>();
-            Program.Add(values);
-            Program.Members(values);
-            Program.map.TryGetValue(values[0], out strlist);
-            Assert.IsTrue(Program.map.ContainsValue(strlist));
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Members(values);
+            DictionaryExtensionHelper.map.TryGetValue(values[0], out strlist);
+            Assert.IsTrue(DictionaryExtensionHelper.map.ContainsValue(strlist));
 
         }
 
@@ -51,11 +51,11 @@ namespace MultiValueDictionaryTest
         {
             string[] values = new string[] { "foo", "baz" };
 
-            Program.Add(values);
+            DictionaryExtensionHelper.Add(values);
 
-            Assert.IsTrue(Program.map.ContainsKey("foo"));
+            Assert.IsTrue(DictionaryExtensionHelper.map.ContainsKey("foo"));
 
-            Assert.AreEqual(Program.map.Count, 1);
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 1);
 
         }
 
@@ -64,10 +64,10 @@ namespace MultiValueDictionaryTest
         {
             string[] values = new string[] { "foo", "bad" };
 
-            Program.Add(values);
-            Program.Remove(values);
-            Assert.IsFalse(Program.map.ContainsKey("foo"));
-            Assert.AreEqual(Program.map.Count, 0);
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Remove(values);
+            Assert.IsFalse(DictionaryExtensionHelper.map.ContainsKey("foo"));
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 0);
 
         }
 
@@ -77,13 +77,13 @@ namespace MultiValueDictionaryTest
             string[] values = new string[] { "foo", "baz" };
             string[] values2 = new string[] { "foo", "bar" };
 
-            Program.Add(values);
-            Program.Add(values2);
-            Program.RemoveAll(new string[] { "foo"});
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Add(values2);
+            DictionaryExtensionHelper.RemoveAll(new string[] { "foo"});
 
-            Assert.IsFalse(Program.map.ContainsKey("foo"));
+            Assert.IsFalse(DictionaryExtensionHelper.map.ContainsKey("foo"));
 
-            Assert.AreEqual(Program.map.Count, 0);
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 0);
 
         }
 
@@ -93,13 +93,13 @@ namespace MultiValueDictionaryTest
             string[] values = new string[] { "foo", "baz" };
             string[] values2 = new string[] { "foo", "bar" };
 
-            Program.Add(values);
-            Program.Add(values2);
-            Program.Clear();
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Add(values2);
+            DictionaryExtensionHelper.Clear();
 
-            Assert.IsFalse(Program.map.ContainsKey("foo"));
+            Assert.IsFalse(DictionaryExtensionHelper.map.ContainsKey("foo"));
 
-            Assert.AreEqual(Program.map.Count, 0);
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 0);
 
         }
 
@@ -109,11 +109,11 @@ namespace MultiValueDictionaryTest
             string[] values = new string[] { "foo", "baz" };
             string[] values2 = new string[] { "foo", "bar" };
 
-            Program.Add(values);
-            Program.Add(values2);
-            Program.KeyExists(new string[] { "foo" });
-            Assert.IsTrue(Program.map.ContainsKey("foo"));
-            Assert.AreEqual(Program.map.Count, 1);
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Add(values2);
+            DictionaryExtensionHelper.KeyExists(new string[] { "foo" });
+            Assert.IsTrue(DictionaryExtensionHelper.map.ContainsKey("foo"));
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 1);
         }
 
         [Test]
@@ -121,9 +121,9 @@ namespace MultiValueDictionaryTest
         {
             string[] values = new string[] { "foo", "baz" };
 
-            Program.Add(values);
-            Assert.IsTrue(Program.MemberExists(values));
-            Assert.AreEqual(Program.map.Count, 1);
+            DictionaryExtensionHelper.Add(values);
+            Assert.IsTrue(DictionaryExtensionHelper.MemberExists(values));
+            Assert.AreEqual(DictionaryExtensionHelper.map.Count, 1);
         }
 
         [Test]
@@ -132,11 +132,11 @@ namespace MultiValueDictionaryTest
             string[] values = new string[] { "foo", "baz" };
             string[] values1 = new string[] { "foo", "bar" };
             List<String> strlist = new List<String>();
-            Program.Add(values);
-            Program.Add(values1);
-            Program.AllMembers();
-            Program.map.TryGetValue(values[0], out strlist);
-            Assert.IsTrue(Program.map.ContainsValue(strlist));
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Add(values1);
+            DictionaryExtensionHelper.AllMembers();
+            DictionaryExtensionHelper.map.TryGetValue(values[0], out strlist);
+            Assert.IsTrue(DictionaryExtensionHelper.map.ContainsValue(strlist));
         }
 
         [Test]
@@ -145,11 +145,11 @@ namespace MultiValueDictionaryTest
             string[] values = new string[] { "foo", "baz" };
             string[] values1 = new string[] { "foo", "bar" };
             List<String> strlist = new List<String>();
-            Program.Add(values);
-            Program.Add(values1);
-            Program.Items();
-            Program.map.TryGetValue(values[0], out strlist);
-            Assert.IsTrue(Program.map.ContainsValue(strlist));
+            DictionaryExtensionHelper.Add(values);
+            DictionaryExtensionHelper.Add(values1);
+            DictionaryExtensionHelper.Items();
+            DictionaryExtensionHelper.map.TryGetValue(values[0], out strlist);
+            Assert.IsTrue(DictionaryExtensionHelper.map.ContainsValue(strlist));
         }
 
 
