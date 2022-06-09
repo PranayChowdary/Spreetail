@@ -19,43 +19,47 @@ namespace MultiValueDictionary
 
                 string arguments = input.Substring(input.IndexOf(' ') + 1);
                 string[] values = arguments.Split(' ');
+                DictionaryFunctionality(command, values);
+            }
+        }
 
-                switch (command)
-                {
-                    case "KEYS":
-                        Keys();
-                        break;
-                    case "MEMBERS":
-                        Members(values);
-                        break;
-                    case "ADD":
-                        Add(values);
-                        break;
-                    case "REMOVE":
-                        Remove(values);
-                        break;
-                    case "REMOVEALL":
-                        RemoveAll(values);
-                        break;
-                    case "CLEAR":
-                        Clear();
-                        break;
-                    case "KEYEXISTS":
-                        Console.WriteLine(KeyExists(values));
-                        break;
-                    case "MEMBEREXISTS":
-                        Console.WriteLine(MemberExists(values));
-                        break;
-                    case "ALLMEMBERS":
-                        AllMembers();
-                        break;
-                    case "ITEMS":
-                        Items();
-                        break;
-                    default:
-                        Console.WriteLine("Wrong command");
-                        break;
-                }
+        private static void DictionaryFunctionality(string command, string[] values)
+        {
+            switch (command)
+            {
+                case "KEYS":
+                    Keys();
+                    break;
+                case "MEMBERS":
+                    Members(values);
+                    break;
+                case "ADD":
+                    Add(values);
+                    break;
+                case "REMOVE":
+                    Remove(values);
+                    break;
+                case "REMOVEALL":
+                    RemoveAll(values);
+                    break;
+                case "CLEAR":
+                    Clear();
+                    break;
+                case "KEYEXISTS":
+                    Console.WriteLine(KeyExists(values));
+                    break;
+                case "MEMBEREXISTS":
+                    Console.WriteLine(MemberExists(values));
+                    break;
+                case "ALLMEMBERS":
+                    AllMembers();
+                    break;
+                case "ITEMS":
+                    Items();
+                    break;
+                default:
+                    Console.WriteLine("Wrong command");
+                    break;
             }
         }
 
@@ -150,9 +154,6 @@ namespace MultiValueDictionary
             }
 
         }
-
-
-
         public static void Remove(string[] values)
         {
             try
@@ -162,40 +163,35 @@ namespace MultiValueDictionary
                     Console.WriteLine("Invalid Input, please try again...");
                     return;
                 }
-                int flag = 0;
-                List<String> strlist = new List<String>();
 
-                if (map.ContainsKey(values[0]))
-                {
-                    map.TryGetValue(values[0], out strlist);
-                    foreach (string item in strlist.ToList())
-                    {
-                        if (item == values[1])
-                        {
-                            strlist.Remove(item);
-                            if (strlist.Count == 0)
-                            {
-                                map.Remove(values[0]);
-                            }
-                            else
-                            {
-                                map.Remove(values[0]);
-                                map.Add(values[0], strlist);
-                            }
-                            flag = 1;
-                            Console.WriteLine("Removed");
-
-                        }
-                    }
-                    if (flag == 0)
-                    {
-                        Console.WriteLine("ERROR, member does not exist");
-                        return;
-                    }
-                }
-                else
+                if (!map.ContainsKey(values[0]))
                 {
                     Console.WriteLine("ERROR, key does not exist ");
+                    return;
+                }
+                int flag = 0;
+                List<String> strlist = new List<String>();
+                map.TryGetValue(values[0], out strlist);
+                foreach (string item in strlist.ToList())
+                {
+                    if (item == values[1])
+                    {
+                        strlist.Remove(item);
+                        if (strlist.Count != 0)
+                        {
+                            map.Remove(values[0]);
+                            map.Add(values[0], strlist);
+                            continue;                            
+                        }
+                        map.Remove(values[0]);                       
+                        flag = 1;
+                        Console.WriteLine("Removed");
+
+                    }
+                }
+                if (flag == 0)
+                {
+                    Console.WriteLine("ERROR, member does not exist");
                     return;
                 }
             }
