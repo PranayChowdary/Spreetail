@@ -18,6 +18,7 @@ namespace MultiValueDictionaryTest
             program = new Program();
         }
 
+        [TearDown]
         public void TearDown()
         {
             Program.map.Clear();

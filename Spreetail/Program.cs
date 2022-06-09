@@ -116,12 +116,7 @@ namespace MultiValueDictionary
         {
             try
             {
-                if (values.Length != 2)
-                {
-                    Console.WriteLine("Invalid Input, please try again...");
-                    return;
-                }
-                if (values[0] == " ")
+                if (values.Length != 2 || values[0] == " ")
                 {
                     Console.WriteLine("Invalid Input, please try again...");
                     return;
@@ -169,41 +164,39 @@ namespace MultiValueDictionary
                 }
                 int flag = 0;
                 List<String> strlist = new List<String>();
-                if (values.Length == 2)
+
+                if (map.ContainsKey(values[0]))
                 {
-                    if (map.ContainsKey(values[0]))
+                    map.TryGetValue(values[0], out strlist);
+                    foreach (string item in strlist.ToList())
                     {
-                        map.TryGetValue(values[0], out strlist);
-                        foreach (string item in strlist.ToList())
+                        if (item == values[1])
                         {
-                            if (item == values[1])
+                            strlist.Remove(item);
+                            if (strlist.Count == 0)
                             {
-                                strlist.Remove(item);
-                                if (strlist.Count == 0)
-                                {
-                                    map.Remove(values[0]);
-                                }
-                                else
-                                {
-                                    map.Remove(values[0]);
-                                    map.Add(values[0], strlist);
-                                }
-                                flag = 1;
-                                Console.WriteLine("Removed");
-                                
+                                map.Remove(values[0]);
                             }
-                        }
-                        if (flag == 0)
-                        {
-                            Console.WriteLine("ERROR, member does not exist");
-                            return;
+                            else
+                            {
+                                map.Remove(values[0]);
+                                map.Add(values[0], strlist);
+                            }
+                            flag = 1;
+                            Console.WriteLine("Removed");
+
                         }
                     }
-                    else
+                    if (flag == 0)
                     {
-                        Console.WriteLine("ERROR, key does not exist ");
+                        Console.WriteLine("ERROR, member does not exist");
                         return;
                     }
+                }
+                else
+                {
+                    Console.WriteLine("ERROR, key does not exist ");
+                    return;
                 }
             }
             catch (Exception ex)
@@ -304,9 +297,9 @@ namespace MultiValueDictionary
                 if (map.Count == 0)
                 {
                     Console.WriteLine("(empty set)");
+                    return;
                 }
-                else
-                {
+
                     foreach (string key in map.Keys)
                     {
                         List<String> strlist = new List<String>();
@@ -317,7 +310,6 @@ namespace MultiValueDictionary
                             i++;
                         }
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -335,9 +327,8 @@ namespace MultiValueDictionary
                 if (map.Count == 0)
                 {
                     Console.WriteLine("(empty set)");
+                    return;
                 }
-                else
-                {
                     foreach (string key in map.Keys)
                     {
                         List<String> strlist = new List<String>();
@@ -348,7 +339,6 @@ namespace MultiValueDictionary
                             i++;
                         }
                     }
-                }
 
             }
             catch (Exception ex)
